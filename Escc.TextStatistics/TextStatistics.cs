@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Microsoft.ApplicationBlocks.ExceptionManagement;
+using Exceptionless;
 
 
 namespace Escc.TextStatistics
@@ -272,12 +272,12 @@ namespace Escc.TextStatistics
             catch (IndexOutOfRangeException outEx)
             {
 
-                ExceptionManager.Publish(new Exception("Error thrown when computing words with 3 syllables for the text - " + text, outEx));
+                new Exception("Error thrown when computing words with 3 syllables for the text - " + text, outEx).ToExceptionless().Submit();
 
             }
             catch (Exception ex)
             {
-                ExceptionManager.Publish(new Exception("Unhandled exception thrown when computing words with 3 syllables for the text - " + text, ex));
+                new Exception("Unhandled exception thrown when computing words with 3 syllables for the text - " + text, ex).ToExceptionless().Submit();
             }
 
             return (longWordCount);
